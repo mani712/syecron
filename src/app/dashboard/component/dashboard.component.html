@@ -1,0 +1,40 @@
+<div class="container mt-4">
+  <input
+    type="search"
+    [(ngModel)]="searchText"
+    placeholder="Search by title"
+    class="form-control"
+  />
+
+  <hr />
+
+  <fa-icon
+    [icon]="gripHorizontal"
+    size="3x"
+    (click)="dataGrid(true)"
+    class="text-primary float-right"
+    [ngClass]="{ 'text-muted': display }"
+  ></fa-icon>
+  <fa-icon
+    [icon]="gripLines"
+    size="3x"
+    (click)="dataGrid(false)"
+    class="text-primary float-right mr-3"
+    [ngClass]="{ 'text-muted': !display }"
+  ></fa-icon>
+
+  <div class="row clear">
+    <ng-template
+      ngFor
+      let-item
+      [ngForOf]="data | filter: searchText | slice: 1:10"
+    >
+      <app-card
+        [cardData]="item"
+        [ngClass]="display ? 'col-md-4 col-sm-12' : 'col-md-12'"
+      ></app-card>
+    </ng-template>
+  </div>
+
+  <app-pagination (pageNumber)="onPage($event)"></app-pagination>
+</div>
